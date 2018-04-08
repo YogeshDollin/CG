@@ -1,5 +1,5 @@
-#include<iostream>
-#include<graphics.h>
+#include <iostream>
+#include <graphics.h>
 
 using namespace std;
 
@@ -69,8 +69,8 @@ class Draw_line:public Pixel{
 			
 			putpixel(xmid+x,ymid-y,10);
 			
-			s1=(x2>xco?1:x2=xco?0:-1);
-			s2=(y2>yco?1:y2=yco?0:-1);
+			s1=(x2>xco?1:x2==xco?0:-1);
+			s2=(y2>yco?1:y2==yco?0:-1);
 			
 			if(dy>dx){
 				temp=dy;
@@ -95,7 +95,8 @@ class Draw_line:public Pixel{
 					y=y+s2;
 				else
 					x=x+s1;
-				e=e+2*dy;		
+				e=e+2*dy;
+				cout<<s1<<endl;		
 				putpixel(xmid+x,ymid-y,10);
 				i++;
 
@@ -105,14 +106,17 @@ class Draw_line:public Pixel{
 };
 
 int main(){
-	int gd=DETECT,gm=VGAMAX,x1,y1,x2,y2,ymax,xmax,xmid,ymid;
+	int gd=DETECT,gm=VGAMAX,x1,y1,x2,y2,ymax,xmax,xmid,ymid,choice;
 	Draw_line d;
 	
 	cout<<"\n ENTER x1,y1:";
 	cin>>x1>>y1;
 	cout<<"\n ENTER x2,y2:";
 	cin>>x2>>y2;
-	
+
+	cout<<"\n\n 1.DDA \n2.Bresenhem \n\nenter choice : ";
+	cin>>choice;
+		
 	initgraph(&gd,&gm,NULL);
 		xmax=getmaxx();
 		ymax=getmaxy();
@@ -122,11 +126,14 @@ int main(){
 		line(0,ymid,xmax,ymid);
 		line(xmid,0,xmid,ymax);
 		
-		//d.setline(x1+xmid,ymid-y1,x2+xmid,ymid-y2);
-		//d.dda_algorithm();
-		
-		d.setline(x1,y1,x2,y2);
-		d.bresenhem_algo(xmid,ymid);
+		if(choice==1){
+		d.setline(x1+xmid,ymid-y1,x2+xmid,ymid-y2);
+		d.dda_algorithm();
+		}
+		else{
+				d.setline(x1,y1,x2,y2);
+				d.bresenhem_algo(xmid,ymid);
+		}
 		
 		getchar();
 		
